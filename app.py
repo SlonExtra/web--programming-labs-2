@@ -1,11 +1,17 @@
-from flask import Flask
+from flask import Flask, redirect
 app = Flask(__name__) 
 
 @app.route('/')
 @app.route('/index')
 
 def start():
-    return """
+    return redirect ("/menu", code=302)
+
+
+@app.route('/menu')
+def menu():
+     return """
+
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -46,7 +52,7 @@ def lab1():
     </head>
     <body>
         <header>
-            НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных
+            НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных 
         </header>
 
         <div>
