@@ -7,8 +7,7 @@ body {
 }
 
 header {
-    background-color: #ff6347; /* Яркий красный цвет */
-    color: #fff;
+    background-color: #ff6347; 
     padding: 20px 0;
     text-align: center;
     font-size: 24px;
@@ -17,7 +16,7 @@ header {
 }
 
 footer {
-    background-color: #ff6347; /* Яркий красный цвет */
+    background-color: #ff6347;
     color: #fff;
     text-align: center;
     padding: 15px 0;
@@ -37,8 +36,15 @@ div {
 
 h1 {
     text-align: center;
-    color: #ff6347; /* Яркий красный цвет */
+    color: #ff6347; 
     font-size: 36px;
+    margin-top: 30px;
+}
+
+h2 {
+    text-align: center;
+    color: #ff6347; 
+    font-size: 28px;
     margin-top: 30px;
 }
 
@@ -51,7 +57,7 @@ img {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-ol {
+ol, ul {
     list-style-type: none;
     padding: 0;
     margin: 20px 0;
