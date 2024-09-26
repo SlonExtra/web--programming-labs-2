@@ -1,23 +1,22 @@
-from flask import Flask, redirect
-app = Flask(__name__) 
+from flask import Flask, redirect, url_for
+
+app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
-
 def start():
-    return redirect ("/menu", code=302)
-
+    return redirect("/menu", code=302)
 
 @app.route('/menu')
 def menu():
-     return """
-
+    return '''
 <!DOCTYPE html>
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Руди Дмитрий Константинович, лабораторная 1</title>
+        <title>Руди Дмитрий Константинович, лабораторная 1</title>
+        <link rel="stylesheet" href="''' + url_for('static', filename='styles.css') + '''">
     </head>
     <body>
         <header>
@@ -29,7 +28,6 @@ def menu():
                 <li>
                     <a href="/lab1">Лабораторная работа 1</a>
                 </li>
-
             </ol>
         </div>
 
@@ -38,17 +36,18 @@ def menu():
         </footer>
     </body>
 </html>
-"""
+'''
 
 @app.route('/lab1')
 def lab1():
-     return """
+    return '''
 <!DOCTYPE html>
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Руди Дмитрий Константинович, лабораторная 1</title>
+        <title>Руди Дмитрий Константинович, лабораторная 1</title>
+        <link rel="stylesheet" href="''' + url_for('static', filename='styles.css') + '''">
     </head>
     <body>
         <header>
@@ -69,4 +68,25 @@ def lab1():
         </footer>
     </body>
 </html>
-"""
+'''
+
+@app.route('/lab1/oak')
+def oak():
+    return '''
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <title>Дуб</title>
+    </head>
+    <body>
+        <h1>ДУБ</h1>
+        <img src="''' + url_for('static', filename='oak.webp') + '''">
+        <a href="/lab1">Назад</a>
+    </body>
+</html>
+'''
+
+if __name__ == '__main__':
+    app.run(debug=True)
