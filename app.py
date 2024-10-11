@@ -316,7 +316,7 @@ def calc(a, b):
     <p>Возведение в степень: {a} ^ {b} = {pow_result}</p>
     """
 
-# books.py
+
 
 books = [
     {"author": "Джордж Оруэлл", "title": "1984", "genre": "Научная фантастика", "pages": 328},
@@ -331,6 +331,18 @@ books = [
     {"author": "Стивен Кинг", "title": "Оно", "genre": "Ужасы", "pages": 1138},
 ]
 
-@app.route('/laba2/books/')
+@app.route('/lab2/books/')
 def index():
     return render_template('books.html', books=books)
+
+cats = [
+    {"name": "Мурка", "description": "Спокойная и ласковая кошка.", "image": "cat1.jpg"},
+    {"name": "Барсик", "description": "Активный и игривый кот.", "image": "cat2.jpeg"},
+    {"name": "Пушок", "description": "Любит спать весь день.", "image": "cat3.jpg"},
+    {"name": "Снежок", "description": "Просто душка.", "image": "cat4.jpg"},
+    {"name": "Рыжик", "description": "Пушистая прелесть.", "image": "cat5.jpg"},
+]
+
+@app.route('/lab2/cats/')
+def cat():
+    return render_template('cats.html', cats=cats)
