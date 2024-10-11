@@ -165,3 +165,9 @@ def oak():
 </html>
 '''
 
+@app.route('/lab2/a/')
+def a():
+    return 'со слешем'
+@app.route('/lab2/a')
+def a2():
+    return 'без слеша'
