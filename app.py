@@ -287,3 +287,31 @@ def lab2():
 def filter_example():
     phrase = "сколько нам открытий чудных готовит просвещенья дух"
     return render_template('filter.html', phrase=phrase)
+
+# Обработчик для перенаправления с /lab2/calc/ на /lab2/calc/1/1
+@app.route('/lab2/calc/')
+def default_calc():
+    return redirect(url_for('calc', a=1, b=1))
+
+# Обработчик для перенаправления с /lab2/calc/<int:a> на /lab2/calc/<int:a>/1
+@app.route('/lab2/calc/<int:a>')
+def redirect_calc(a):
+    return redirect(url_for('calc', a=a, b=1))
+
+# Основной обработчик, который выполняет математические операции
+@app.route('/lab2/calc/<int:a>/<int:b>')
+def calc(a, b):
+    sum_result = a + b
+    sub_result = a - b
+    mul_result = a * b
+    div_result = a / b if b != 0 else "Деление на ноль!"
+    pow_result = a ** b
+
+    return f"""
+    <h1>Результаты вычислений:</h1>
+    <p>Сумма: {a} + {b} = {sum_result}</p>
+    <p>Разность: {a} - {b} = {sub_result}</p>
+    <p>Произведение: {a} * {b} = {mul_result}</p>
+    <p>Деление: {a} / {b} = {div_result}</p>
+    <p>Возведение в степень: {a} ^ {b} = {pow_result}</p>
+    """
