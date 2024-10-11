@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фильтры в Jinja2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, WEB-программирование, часть 2. Фильтры в Jinja2
+    </header>
+
+    <main>
+        <h1>Пример использования фильтров в Jinja2</h1>
+
+        <h2>Исходная фраза:</h2>
+        <p>{{ phrase }}</p>
+
+        <h2>Фильтр title:</h2>
+        <p>{{ phrase|title }}</p>
+
+        <h2>Фильтр striptags:</h2>
+        <p>{{ phrase|striptags }}</p>
+
+        <h2>Фильтр safe:</h2>
+        <p>{{ phrase|safe }}</p>
+
+        <h2>Фильтр replace:</h2>
+        <p>{{ phrase|replace('сколько', 'много')|replace('нам', 'тут') }}</p>
+
+        <h2>Фильтр upper:</h2>
+        <p>{{ phrase|upper }}</p>
+
+        <h2>Фильтр striptags + reverse:</h2>
+        <p>{{ phrase|striptags|reverse }}</p>
+    </main>
+
+    <footer>
+        &copy; Руди Дмитрий, ФБИ-24, 3 курс, 2024 
+    </footer>
+</body>
+</html>
