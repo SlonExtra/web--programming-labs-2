@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Руди Дмитрий. Лабораторная работа 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, WEB-программирование, часть 2. {% block lab %}{% endblock %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; {% if name %}{{ name }}{% else %}Анонимус{% endif %}, 
+        {% if group %}ФБИ-{{ group }},{% else %}Группа не указана,{% endif %} 
+        {% if course %} {{ course }} курс,{% else %}Курс не указан,{% endif %} 2024 
+    </footer>
+</body>
+</html>
