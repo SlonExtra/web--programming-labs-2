@@ -337,7 +337,7 @@ def index():
 
 cats = [
     {"name": "Мурка", "description": "Спокойная и ласковая кошка.", "image": "cat1.jpg"},
-    {"name": "Барсик", "description": "Активный и игривый кот.", "image": "cat2.jpeg"},
+    {"name": "Барсик", "description": "Активный и игривый кот.", "image": "cat2.jpеg"},
     {"name": "Пушок", "description": "Любит спать весь день.", "image": "cat3.jpg"},
     {"name": "Снежок", "description": "Просто душка.", "image": "cat4.jpg"},
     {"name": "Рыжик", "description": "Пушистая прелесть.", "image": "cat5.jpg"},
