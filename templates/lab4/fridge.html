@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 4. Холодильник{% endblock %}
+
+{% block content %}
+    <h1>Холодильник</h1>
+    <form method="post" action="/lab4/fridge">
+        <label>
+            Температура: <input type="number" name="temperature" step="0.1" required>
+        </label><br>
+        <button type="submit">Установить температуру</button>
+    </form>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% elif temperature is not none %}
+        <p>Установлена температура: {{ temperature }}°С</p>
+        {% if temperature >= -12 and temperature <= -9 %}
+            <p>❄️❄️❄️</p>
+        {% elif temperature >= -8 and temperature <= -5 %}
+            <p>❄️❄️</p>
+        {% elif temperature >= -4 and temperature <= -1 %}
+            <p>❄️</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

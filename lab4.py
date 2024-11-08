@@ -5,10 +5,10 @@ lab4 = Blueprint('lab4', __name__)
 tree_count = 0  # Инициализация счётчика деревьев
 
 users = [
-    {'login': 'alex', 'password': '123'},
-    {'login': 'bob', 'password': '456'},
-    {'login': 'user1', 'password': 'pass1'},
-    {'login': 'user2', 'password': 'pass2'}
+    {'login': 'alex', 'password': '123', 'name': 'Иван Иванов', 'gender': 'male'},
+    {'login': 'bob', 'password': '456', 'name': 'Алексей Петров', 'gender': 'male'},
+    {'login': 'user1', 'password': 'pass1', 'name': 'Мария Сидорова', 'gender': 'female'},
+    {'login': 'user2', 'password': 'pass2', 'name': 'Елена Иванова', 'gender': 'female'}
 ]
 
 @lab4.route('/lab4')
@@ -150,22 +150,59 @@ def tree():
 def login():
     if request.method == 'GET':
         if 'login' in session:
-            return render_template('lab4/login.html', authorized=True, login=session['login'])
+            return render_template('lab4/login.html', authorized=True, login=session['login'], name=session['name'])
         else:
             return render_template('lab4/login.html', authorized=False)
 
     login = request.form.get('login')
     password = request.form.get('password')
 
+    if not login:
+        error = "Не введён логин"
+        return render_template('lab4/login.html', authorized=False, error=error, login=login)
+
+    if not password:
+        error = "Не введён пароль"
+        return render_template('lab4/login.html', authorized=False, error=error, login=login)
+
     for user in users:
         if user['login'] == login and user['password'] == password:
             session['login'] = login
+            session['name'] = user['name']
             return redirect('/lab4/login')
 
     error = "Неверный логин или пароль"
-    return render_template('lab4/login.html', authorized=False, error=error)
+    return render_template('lab4/login.html', authorized=False, error=error, login=login)
 
 @lab4.route('/lab4/logout', methods=['POST'])
 def logout():
     session.pop('login', None)
+    session.pop('name', None)
     return redirect('/lab4/login')
+
+@lab4.route('/lab4/fridge', methods=['GET', 'POST'])
+def fridge():
+    if request.method == 'GET':
+        return render_template('lab4/fridge.html', temperature=None)
+
+    temperature = request.form.get('temperature')
+
+    if not temperature:
+        error = "Ошибка: не задана температура"
+        return render_template('lab4/fridge.html', error=error, temperature=None)
+
+    try:
+        temperature = float(temperature)
+    except ValueError:
+        error = "Ошибка: введите корректное число"
+        return render_template('lab4/fridge.html', error=error, temperature=None)
+
+    if temperature < -12:
+        error = "Не удалось установить температуру — слишком низкое значение"
+        return render_template('lab4/fridge.html', error=error, temperature=None)
+
+    if temperature > -1:
+        error = "Не удалось установить температуру — слишком высокое значение"
+        return render_template('lab4/fridge.html', error=error, temperature=None)
+
+    return render_template('lab4/fridge.html', temperature=temperature)
