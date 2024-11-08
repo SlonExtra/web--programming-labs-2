@@ -39,3 +39,39 @@ def form1():
         return render_template('lab3/form1.html', user=user, age=age, sex_ru=sex_ru)
 
     return render_template('lab3/form1.html')
+
+
+@lab3.route('/lab3/order', methods=['GET', 'POST'])
+def order():
+    if request.method == 'POST':
+        drink = request.form.get('drink')
+        milk = 'milk' in request.form
+        sugar = 'sugar' in request.form
+        return render_template('lab3/pay.html', drink=drink, milk=milk, sugar=sugar)
+    return render_template('lab3/order.html')
+
+@lab3.route('/lab3/pay', methods=['POST'])
+def pay():
+    drink = request.form.get('drink')
+    milk = request.form.get('milk') == 'on'
+    sugar = request.form.get('sugar') == 'on'
+    
+    price = 0
+    if drink == 'coffee':
+        price = 120
+    elif drink == 'black-tea':
+        price = 80
+    elif drink == 'green-tea':
+        price = 70
+    
+    if milk:
+        price += 30
+    if sugar:
+        price += 10
+    
+    return render_template('lab3/pay.html', price=price)
+
+@lab3.route('/lab3/success', methods=['POST'])
+def success():
+    price = request.form.get('price')
+    return render_template('lab3/success.html', price=price)
