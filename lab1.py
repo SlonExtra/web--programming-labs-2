@@ -50,7 +50,7 @@ def student():
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
         <title>Студент</title>
     </head>
     <body>
@@ -59,7 +59,7 @@ def student():
         </header>
 
         <h1>Руди Дмитрий Константинович</h1>
-        <img src="''' + url_for('static', filename='nstu_logo.webp') + '''" alt="Лого НГТУ">
+        <img src="''' + url_for('static', filename='lab1/nstu_logo.webp') + '''" alt="Лого НГТУ">
 
         <footer>
             &copy; Руди Дмитрий, ФБИ-24, 3 курс, 2024 
@@ -75,7 +75,7 @@ def python():
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
         <title>Python</title>
     </head>
     <body>
@@ -95,7 +95,7 @@ def python():
             Python является интерпретируемым языком, поддерживающим динамическую типизацию. Это означает, что переменные в Python не требуют объявления типа данных, и тип может изменяться во время выполнения программы.
         </div>
 
-        <img src="''' + url_for('static', filename='python_logo.webp') + '''" alt="Лого Python">
+        <img src="''' + url_for('static', filename='lab1/python_logo.webp') + '''" alt="Лого Python">
 
         <footer>
             &copy; Руди Дмитрий, ФБИ-24, 3 курс, 2024 
@@ -111,7 +111,7 @@ def oak():
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
         <title>Дуб</title>
     </head>
     <body>
@@ -120,7 +120,7 @@ def oak():
         </header>
 
         <h1>ДУБ</h1>
-        <img src="''' + url_for('static', filename='oak.webp') + '''" alt="Дуб">
+        <img src="''' + url_for('static', filename='lab1/oak.webp') + '''" alt="Дуб">
 
         <footer>
             &copy; Руди Дмитрий, ФБИ-24, 3 курс, 2024 

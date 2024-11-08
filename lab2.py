@@ -23,7 +23,7 @@ def flowers(flower_id):
         <html lang="ru">
             <head>
                 <meta charset="UTF-8">
-                <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+                <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
                 <title>Информация о цветке</title>
             </head>
             <body>
@@ -42,7 +42,7 @@ def add_flower(name):
     <html lang="ru">
         <head>
             <meta charset="UTF-8">
-            <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+            <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
             <title>Добавление цветка</title>
         </head>
         <body>
@@ -66,7 +66,7 @@ def all_flowers():
     <html lang="ru">
         <head>
             <meta charset="UTF-8">
-            <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+            <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
             <title>Все цветы</title>
         </head>
         <body>
@@ -87,7 +87,7 @@ def clear_flowers():
     <html lang="ru">
         <head>
             <meta charset="UTF-8">
-            <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+            <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
             <title>Очистка списка цветов</title>
         </head>
         <body>
@@ -179,4 +179,4 @@ cats = [
 
 @lab2.route('/lab2/cats/')
 def cat():
-    return render_template('cats.html', cats=cats)
+    return render_template('lab2/cats.html', cats=cats)

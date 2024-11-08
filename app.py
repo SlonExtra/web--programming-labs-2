@@ -22,7 +22,7 @@ def menu():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Руди Дмитрий Константинович, лабораторная 1</title>
-        <link rel="stylesheet" href="''' + url_for('static', filename='styles.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
     </head>
     <body>
         <header>
@@ -33,6 +33,13 @@ def menu():
             <ol>
                 <li>
                     <a href="/lab1">Лабораторная работа 1</a>
+                </li>
+                <li>
+                    <a href="/lab2">Лабораторная работа 2</a>
+                </li>
+                <li>
+                    <a href="/lab3">Лабораторная работа 3</a>
+
                 </li>
             </ol>
         </div>
