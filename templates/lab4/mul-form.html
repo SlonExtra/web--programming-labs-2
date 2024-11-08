@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 4. Умножение чисел{% endblock %}
+
+{% block content %}
+    <h1>Умножение чисел</h1>
+    <form method="post" action="/lab4/mul">
+        <label>
+            Число 1: <input type="number" name="x1">
+        </label><br>
+        <label>
+            Число 2: <input type="number" name="x2">
+        </label><br>
+        <button type="submit">*</button>
+    </form>
+{% endblock %}
