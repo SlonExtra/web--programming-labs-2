@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 4. Счётчик деревьев{% endblock %}
+
+{% block content %}
+    <h1>Счётчик деревьев</h1>
+    <p>Количество деревьев: {{ tree_count }}</p>
+    <form method="post" action="/lab4/tree">
+        <button type="submit" name="operation" value="plant" {% if tree_count >= 10 %}disabled{% endif %}>Посадить дерево</button>
+        <button type="submit" name="operation" value="cut" {% if tree_count <= 0 %}disabled{% endif %}>Срубить дерево</button>
+    </form>
+{% endblock %}
