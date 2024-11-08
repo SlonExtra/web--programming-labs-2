@@ -25,9 +25,6 @@ def clear_cookies():
     response.delete_cookie('name_color')
     return response
 
-from flask import Blueprint, render_template, request, url_for
-
-lab3 = Blueprint('lab3', __name__)
 
 @lab3.route('/lab3/form1', methods=['GET', 'POST'])
 def form1():
@@ -36,7 +33,7 @@ def form1():
         age = request.form.get('age')
         sex = request.form.get('sex')
 
-        # Преобразование пола на русский язык
+        #Преобразование пола на русский язык
         sex_ru = 'Мужской' if sex == 'male' else 'Женский'
 
         return render_template('lab3/form1.html', user=user, age=age, sex_ru=sex_ru)
