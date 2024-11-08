@@ -5,9 +5,10 @@ lab3 = Blueprint('lab3', __name__)
 
 @lab3.route('/lab3/')
 def lab():
-    name = request.cookies.get('name')
-    name_color = request.cookies.get('name_color')
-    return render_template('lab3/lab3.html', name=name, name_color=name_color)
+    name = request.cookies.get('name') or 'аноним'
+    name_color = request.cookies.get('name_color', 'black')
+    age = request.cookies.get('age') or 'неизвестно'
+    return render_template('lab3/lab3.html', name=name, name_color=name_color, age=age)
 
 @lab3.route('/lab3/cookie', methods=['GET', 'POST'])
 def cookie():
@@ -98,3 +99,40 @@ def settings():
     link_color = request.cookies.get('link_color') or 'blue'
     
     return render_template('lab3/settings.html', color=color, background_color=background_color, font_size=font_size, link_color=link_color)
+
+
+@lab3.route('/lab3/ticket', methods=['GET', 'POST'])
+def ticket():
+    if request.method == 'POST':
+        fio = request.form.get('fio')
+        shelf = request.form.get('shelf')
+        linen = 'linen' in request.form
+        baggage = 'baggage' in request.form
+        age = int(request.form.get('age'))
+        departure = request.form.get('departure')
+        destination = request.form.get('destination')
+        date = request.form.get('date')
+        insurance = 'insurance' in request.form
+
+        # Проверка на пустые поля
+        if not fio or not shelf or not age or not departure or not destination or not date:
+            return "Все поля должны быть заполнены", 400
+
+        # Проверка возраста
+        if age < 1 or age > 120:
+            return "Возраст должен быть от 1 до 120 лет", 400
+
+        # Расчет стоимости билета
+        price = 1000 if age >= 18 else 700
+        if shelf in ['нижняя', 'нижняя боковая']:
+            price += 100
+        if linen:
+            price += 75
+        if baggage:
+            price += 250
+        if insurance:
+            price += 150
+
+        return render_template('lab3/ticket.html', fio=fio, shelf=shelf, linen=linen, baggage=baggage, age=age, departure=departure, destination=destination, date=date, insurance=insurance, price=price)
+
+    return render_template('lab3/ticket_form.html')
