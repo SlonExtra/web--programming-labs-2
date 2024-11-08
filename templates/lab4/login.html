@@ -5,11 +5,14 @@
 {% block content %}
     <h1>Авторизация</h1>
     {% if authorized %}
-        <p>Привет, {{ login }}!</p>
+        <p>Добро пожаловать, {{ name }}!</p>
+        <form method="post" action="/lab4/logout">
+            <button type="submit">Выход</button>
+        </form>
     {% else %}
         <form method="post" action="/lab4/login">
             <label>
-                Имя пользователя: <input type="text" name="login" required>
+                Имя пользователя: <input type="text" name="login" value="{{ login }}" required>
             </label><br>
             <label>
                 Пароль: <input type="password" name="password" required>
@@ -18,7 +21,7 @@
             <button type="reset">Отмена</button>
         </form>
         {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <p style="color: red; font-weight: bold;">{{ error }}</p>
         {% endif %}
     {% endif %}
 {% endblock %}
