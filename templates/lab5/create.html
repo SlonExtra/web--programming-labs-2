@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать статью</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lab5/lab5.css') }}">
+</head>
+<body>
+    <header>
+        Создать статью
+    </header>
+
+    <div class="content">
+        <form method="POST">
+            <label for="title">Заголовок:</label>
+            <input type="text" id="title" name="title" required>
+            <br>
+            <label for="content">Содержание:</label>
+            <textarea id="content" name="content" required></textarea>
+            <br>
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; Руди Дмитрий, ФБИ-24, 3 курс, 2024
+    </footer>
+</body>
+</html>
