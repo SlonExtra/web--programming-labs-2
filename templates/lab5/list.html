@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список статей</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='lab5/lab5.css') }}">
-</head>
-<body>
-    <header>
-        Список статей
-    </header>
+{% extends "base.html" %}
 
-    <div class="content">
-        <ul>
-            <!-- Здесь будет список статей -->
-        </ul>
-    </div>
+{% block lab %}Лабораторная работа 5. Список статей{% endblock %}
 
-    <footer>
-        &copy; Руди Дмитрий, ФБИ-24, 3 курс, 2024
-    </footer>
-</body>
-</html>
+{% block content %}
+    <h1>Список статей</h1>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{{ url_for('lab5.view_article', id=article.id) }}">{{ article.title }}</a>
+                <form method="post" action="{{ url_for('lab5.like_article', id=article.id) }}" style="display:inline;">
+                    <button type="submit">👍 {{ article.likes }}</button>
+                </form>
+                <form method="post" action="{{ url_for('lab5.dislike_article', id=article.id) }}" style="display:inline;">
+                    <button type="submit">👎 {{ article.dislikes }}</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

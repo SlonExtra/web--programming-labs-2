@@ -1,4 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, session
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
 from lab1 import lab1
 from lab2 import lab2
 from lab3 import lab3
@@ -13,6 +15,9 @@ app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 app.register_blueprint(lab5)
+
+app.config.from_object(Config)
+db = SQLAlchemy(app)
 
 
 @app.route('/')

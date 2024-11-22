@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 5. Статья{% endblock %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+    <p>Лайки: {{ article.likes }}</p>
+    <p>Дизлайки: {{ article.dislikes }}</p>
+{% endblock %}
