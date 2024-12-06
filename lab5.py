@@ -48,7 +48,8 @@ def register():
         db_close(conn, cur)
         return render_template('lab5/register.html', error=error)
 
-    cur.execute("INSERT INTO users (login, password) VALUES (%s, %s)", (login, password))
+    password_hash = generate_password_hash(password)
+    cur.execute("INSERT INTO users (login, password) VALUES (%s, %s)", (login, password_hash))
     db_close(conn, cur)
 
     return redirect('/lab5/success')
@@ -74,7 +75,7 @@ def login():
     cur.execute("SELECT * FROM users WHERE login = %s", (login,))
     user = cur.fetchone()
 
-    if not user or user['password'] != password:
+    if not user or not check_password_hash(user['password'], password):
         error = "Неверный логин или пароль"
         db_close(conn, cur)
         return render_template('lab5/login.html', error=error)
@@ -87,6 +88,7 @@ def login():
 @lab5.route('/lab5/success_login')
 def success_login():
     return render_template('lab5/success_login.html')
+
 
 @lab5.route('/lab5/create', methods=['GET', 'POST'])
 def create():
