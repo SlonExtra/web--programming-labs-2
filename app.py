@@ -6,9 +6,12 @@ from lab2 import lab2
 from lab3 import lab3
 from lab4 import lab4
 from lab5 import lab5
+import os
+
 
 app = Flask(__name__)
-app.secret_key = 'секрет'
+app.secret_key = os.getenv('SECRET_KEY', 'секретно-секретный-секрет')
+app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
@@ -18,8 +21,6 @@ app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 app.register_blueprint(lab5)
-
-
 
 @app.route('/')
 @app.route('/index')
@@ -56,7 +57,6 @@ def menu():
                 </li>
                 <li>
                     <a href="/lab4">Лабораторная работа 4</a>
-
                 </li>
             </ol>
         </div>
