@@ -132,7 +132,12 @@ def list():
 
     db_close(conn, cur)
 
+    if not articles:
+        message = "У вас пока нет статей."
+        return render_template('lab5/articles.html', articles=articles, message=message)
+
     return render_template('lab5/articles.html', articles=articles)
+
 @lab5.route('/lab5/logout')
 def logout():
     session.pop('login', None) 
