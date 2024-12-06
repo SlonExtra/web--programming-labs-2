@@ -10,14 +10,15 @@ from lab5 import lab5
 app = Flask(__name__)
 app.secret_key = 'секрет'
 
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 app.register_blueprint(lab5)
 
-app.config.from_object(Config)
-db = SQLAlchemy(app)
 
 
 @app.route('/')
