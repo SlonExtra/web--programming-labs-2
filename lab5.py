@@ -116,42 +116,23 @@ def create():
 
     return redirect('/lab5')
 
-@lab5.route('/lab5/list')
+@lab5.route('/lab5/list', methods=['GET'])
 def list():
     login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
     conn, cur = db_connect()
 
+    cur.execute("SELECT id FROM users WHERE login = %s", (login,))
+    user_id = cur.fetchone()['id']
 
-    if current_app.config['DB_TYPE'] == 'postgres':
-        if login:
-            cur.execute(""" 
-                SELECT * FROM articles WHERE user_id = (SELECT id FROM users WHERE login=%s)
-                ORDER BY is_favorite DESC;
-            """, (login,))
-        else:
-            cur.execute(""" 
-                SELECT * FROM articles WHERE is_public = TRUE
-                ORDER BY is_favorite DESC;
-            """)
-    else:
-        if login:
-            cur.execute(""" 
-                SELECT * FROM articles WHERE user_id = (SELECT id FROM users WHERE login=?)
-                ORDER BY is_favorite DESC;
-            """, (login,))
-        else:
-            cur.execute(""" 
-                SELECT * FROM articles WHERE is_public = TRUE
-                ORDER BY is_favorite DESC;
-            """)
-
+    cur.execute("SELECT * FROM articles WHERE user_id = %s", (user_id,))
     articles = cur.fetchall()
+
     db_close(conn, cur)
 
-    if not articles:
-        return render_template('/lab5/articles.html', articles=[], message='У вас нет ни одной статьи.')  
-
-    return render_template('/lab5/articles.html', articles=articles) 
+    return render_template('lab5/articles.html', articles=articles) 
 
 @lab5.route('/lab5/logout')
 def logout():
