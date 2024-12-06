@@ -111,7 +111,7 @@ def create():
     cur.execute("SELECT id FROM users WHERE login = %s", (login,))
     user_id = cur.fetchone()['id']
 
-    cur.execute("INSERT INTO articles (user_id, tittle, article_text) VALUES (%s, %s, %s)", (user_id, title, article_text))
+    cur.execute("INSERT INTO articles (user_id, title, article_text) VALUES (%s, %s, %s)", (user_id, title, article_text))
     db_close(conn, cur)
 
     return redirect('/lab5')
@@ -132,8 +132,7 @@ def list():
 
     db_close(conn, cur)
 
-    return render_template('lab5/articles.html', articles=articles) 
-
+    return render_template('lab5/articles.html', articles=articles)
 @lab5.route('/lab5/logout')
 def logout():
     session.pop('login', None) 
