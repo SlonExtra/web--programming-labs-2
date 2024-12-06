@@ -101,31 +101,19 @@ def create():
     
     title = request.form.get('title')
     article_text = request.form.get('article_text')
-    is_favorite = request.form.get('is_favorite') == 'on'  
-    is_public = request.form.get('is_public') == 'on'  
 
-    if not title or not article_text:  
-        return render_template('lab5/create_article.html', error='Заполните все поля')  
+    if not title or not article_text:
+        error = "Заполните все поля"
+        return render_template('lab5/create_article.html', error=error)
 
     conn, cur = db_connect()
 
-    if current_app.config['DB_TYPE'] == 'postgres':
-        cur.execute("SELECT * FROM users WHERE login=%s;", (login,))
-    else:
-        cur.execute("SELECT * FROM users WHERE login=?;", (login,))
-        
+    cur.execute("SELECT id FROM users WHERE login = %s", (login,))
     user_id = cur.fetchone()['id']
 
-    if current_app.config['DB_TYPE'] == 'postgres':
-        cur.execute("INSERT INTO articles (user_id, title, article_text, is_favorite, is_public)\
-                     VALUES (%s, %s, %s, %s, %s);",
-                    (user_id, title, article_text, is_favorite, is_public))
-    else:
-        cur.execute("INSERT INTO articles (user_id, title, article_text, is_favorite, is_public) \
-                    VALUES (?, ?, ?, ?, ?);",
-                    (user_id, title, article_text, is_favorite, is_public))
-
+    cur.execute("INSERT INTO articles (user_id, tittle, article_text) VALUES (%s, %s, %s)", (user_id, title, article_text))
     db_close(conn, cur)
+
     return redirect('/lab5')
 
 @lab5.route('/lab5/list')
