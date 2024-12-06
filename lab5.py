@@ -12,21 +12,13 @@ def lab():
     return render_template('lab5/lab5.html', login=session.get('login'))
 
 def db_connect():
-    if current_app.config['DB_TYPE'] == 'postgres':
-        conn = psycopg2.connect(
-            host='127.0.0.1',
-            database='rudi',
-            user='rudi',
-            password='123'
-        )
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-    else:
-        dir_path = path.dirname(path.realpath(__file__))
-        db_path = path.join(dir_path, "database.db")
-        conn = sqlite3.connect(db_path)
-        conn.row_factory = sqlite3.Row
-        cur = conn.cursor()
-
+    conn = psycopg2.connect(
+        dbname="rudi",
+        user="rudi",
+        password="123",
+        host="localhost"
+    )
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     return conn, cur
 
 def db_close(conn, cur):
@@ -46,28 +38,18 @@ def register():
         error = "Оба поля должны быть заполнены"
         return render_template('lab5/register.html', error=error)
 
-    conn = psycopg2.connect(
-        dbname="rudi",
-        user="rudi",
-        password="123",
-        host="localhost"
-    )
-    cursor = conn.cursor()
+    conn, cur = db_connect()
 
-    cursor.execute("SELECT * FROM users WHERE login = %s", (login,))
-    user = cursor.fetchone()
+    cur.execute("SELECT * FROM users WHERE login = %s", (login,))
+    user = cur.fetchone()
 
     if user:
         error = "Пользователь с таким логином уже существует"
-        cursor.close()
-        conn.close()
+        db_close(conn, cur)
         return render_template('lab5/register.html', error=error)
 
-    cursor.execute("INSERT INTO users (login, password) VALUES (%s, %s)", (login, password))
-    conn.commit()
-
-    cursor.close()
-    conn.close()
+    cur.execute("INSERT INTO users (login, password) VALUES (%s, %s)", (login, password))
+    db_close(conn, cur)
 
     return redirect('/lab5/success')
 
@@ -87,25 +69,17 @@ def login():
         error = "Заполните все поля"
         return render_template('lab5/login.html', error=error)
 
-    conn = psycopg2.connect(
-        dbname="rudi",
-        user="rudi",
-        password="123",
-        host="localhost"
-    )
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    conn, cur = db_connect()
 
-    cursor.execute("SELECT * FROM users WHERE login = %s", (login,))
-    user = cursor.fetchone()
+    cur.execute("SELECT * FROM users WHERE login = %s", (login,))
+    user = cur.fetchone()
 
     if not user or user['password'] != password:
         error = "Неверный логин или пароль"
-        cursor.close()
-        conn.close()
+        db_close(conn, cur)
         return render_template('lab5/login.html', error=error)
 
-    cursor.close()
-    conn.close()
+    db_close(conn, cur)
 
     session['login'] = login
     return redirect('/lab5/success_login')
