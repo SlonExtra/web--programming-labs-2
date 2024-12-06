@@ -93,12 +93,12 @@ def login():
         password="123",
         host="localhost"
     )
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("SELECT * FROM users WHERE login = %s", (login,))
     user = cursor.fetchone()
 
-    if not user or user[2] != password:
+    if not user or user['password'] != password:
         error = "Неверный логин или пароль"
         cursor.close()
         conn.close()
@@ -107,6 +107,7 @@ def login():
     cursor.close()
     conn.close()
 
+    session['login'] = login
     return redirect('/lab5/success_login')
 
 @lab5.route('/lab5/success_login')
