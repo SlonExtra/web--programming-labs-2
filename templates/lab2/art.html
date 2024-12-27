@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{# номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 2 {% endblock %}
+
+{% block styles %}
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .art-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .art-block {
+            background: rgb(248, 187, 73);
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            text-align: center;
+            width: 600px;
+        }
+        img {
+            width: 100%; 
+            border-radius: 8px;
+        }
+    </style>
+{% endblock %}
+
+{# основной контент #}
+{% block main %}
+<h1>Пейзажи</h1>
+    <div class="art-container">
+        {% for art in arts %}
+        <div class="art-block">
+            <img src="{{ url_for('static', filename='lab2/art/' + art.image) }}">
+            <h2>{{ art.name }}</h2>
+            <div>{{ art.description }}</div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

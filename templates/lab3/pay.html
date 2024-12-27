@@ -1,22 +1,36 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block lab %}Лабораторная работа 3. Настройки отображения{% endblock %}
+{# номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
 
-{% block content %}
-    <h1>Настройки отображения</h1>
-    <form action="/lab3/settings" method="post">
+{# основной контент #}
+{% block main %}
+    <h1> Оплата </h1>
+
+    <div>
+        Сумма к оплате: {{price}} рублей
+    </div>
+
+    <form action="/lab3/success">
+        <div>Номер банковской карты: </div>
         <label>
-            Цвет текста: <input type="color" name="color" value="{{ color }}">
-        </label><br>
+            <input type = 'text' name="card" pattern="\d{16}">
+        </label>
+
+        <div>Имя держателя карты</div>
         <label>
-            Цвет фона: <input type="color" name="background_color" value="{{ background_color }}">
-        </label><br>
+            <input type="text" name="name">
+        </label>
+
+        <div>Номер CVV:</div>
         <label>
-            Размер шрифта: <input type="number" name="font_size" value="{{ font_size }}" min="10" max="48">
-        </label><br>
-        <label>
-            Цвет ссылок: <input type="color" name="link_color" value="{{ link_color }}">
-        </label><br>
-        <button type="submit">ОК</button>
+            <input type="text" name="cvv" size="3" pattern="\d{3}">
+        </label>
+
+        <div>
+            <input type="hidden" name="price" value="{{price}}">
+            <button type="submit">Оплатить</button>
+            <a href="/lab3/order">Отказаться</a>
+        </div>
     </form>
 {% endblock %}

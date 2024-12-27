@@ -1,25 +1,42 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block lab %}Лабораторная работа 3. Заказ напитка{% endblock %}
+{% block lab %}Лабораторная работа 3{% endblock %}
 
-{% block content %}
-    <h1>Заказ напитка</h1>
-    <form action="/lab3/pay" method="post">
-        <label>
-            <input type="radio" name="drink" value="coffee" required> Кофе (120 руб.)
-        </label><br>
-        <label>
-            <input type="radio" name="drink" value="black-tea"> Чёрный чай (80 руб.)
-        </label><br>
-        <label>
-            <input type="radio" name="drink" value="green-tea"> Зелёный чай (70 руб.)
-        </label><br>
-        <label>
-            <input type="checkbox" name="milk"> Молоко (+30 руб.)
-        </label><br>
-        <label>
-            <input type="checkbox" name="sugar"> Сахар (+10 руб.)
-        </label><br>
-        <button type="submit">Заказать</button>
+{% block main %}
+    <h1> Заказ напитка </h1>
+
+    <form action="/lab3/pay">
+        <h3>Напиток: </h3>
+        <p> 
+            <label>
+                <input type="radio" value="coffee" name="drink" checked> Кофе (120 руб.)
+            </label>
+        </p>
+        <p> 
+            <label>
+                <input type="radio" value="black-tea" name="drink" checked> Черный чай (80 руб.)
+            </label>
+        </p>
+        <p> 
+            <label>
+                <input type="radio" value="green-tea" name="drink" checked> Зеленый чай (70 руб.)
+            </label>
+        </p>
+
+        <h3> Добавки:</h3>
+        <p> 
+            <label>
+                <input type="checkbox" name="milk" checked> Молоко (+30 руб.)
+            </label>
+        </p>
+        <p> 
+            <label>
+                <input type="checkbox" name="sugar" checked> Сахар (+10 руб.)
+            </label>
+        </p>
+
+        <div>
+            <button type="submit">Заказать</button>
+        </div>
     </form>
 {% endblock %}

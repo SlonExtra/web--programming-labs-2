@@ -1,13 +1,14 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block lab %}Лабораторная работа 4. Результат вычитания{% endblock %}
+{% block lab %}Вычитание{% endblock %}
 
-{% block content %}
-    <h1>Результат вычитания</h1>
+{% block main %}
     {% if error %}
-        <p style="color: red;">{{ error }}</p>
+        {{ error }}
     {% else %}
-        <p>{{ x1 }} - {{ x2 }} = {{ result }}</p>
+        <h1>Вычитание чисел</h1>
+        {{ x1 }} - {{ x2 }} = {{ result }}
     {% endif %}
-    <a href="/lab4/sub-form">Вернуться к форме</a>
+    <br>
+    <a href="/lab4/sub-form">Назад к форме</a>
 {% endblock %}

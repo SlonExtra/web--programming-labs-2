@@ -1,251 +1,284 @@
 from flask import Blueprint, render_template, request, redirect, session
-
 lab4 = Blueprint('lab4', __name__)
+ 
 
-tree_count = 0  # Инициализация счётчика деревьев
-
-users = [
-    {'login': 'alex', 'password': '123', 'name': 'Иван Иванов', 'gender': 'male'},
-    {'login': 'bob', 'password': '456', 'name': 'Алексей Петров', 'gender': 'male'},
-    {'login': 'user1', 'password': 'pass1', 'name': 'Мария Сидорова', 'gender': 'female'},
-    {'login': 'user2', 'password': 'pass2', 'name': 'Елена Иванова', 'gender': 'female'}
-]
-
-@lab4.route('/lab4')
-def lab4_page():
+@lab4.route('/lab4/')
+def lab():
     return render_template('lab4/lab4.html')
 
 @lab4.route('/lab4/div-form')
 def div_form():
     return render_template('lab4/div-form.html')
 
-@lab4.route('/lab4/div', methods=['POST'])
-def div():
-    x1 = request.form.get('x1')
-    x2 = request.form.get('x2')
-
-    if not x1 or not x2:
-        error = "Оба поля должны быть заполнены"
-        return render_template('lab4/div.html', error=error)
-
-    try:
-        x1 = float(x1)
-        x2 = float(x2)
-    except ValueError:
-        error = "Введите корректные числа"
-        return render_template('lab4/div.html', error=error)
-
-    if x2 == 0:
-        error = "На ноль делить нельзя"
-        return render_template('lab4/div.html', error=error)
-
-    result = x1 / x2
-    return render_template('lab4/div.html', result=result)
-
 @lab4.route('/lab4/sum-form')
 def sum_form():
     return render_template('lab4/sum-form.html')
-
-@lab4.route('/lab4/sum', methods=['POST'])
-def sum():
-    x1 = request.form.get('x1', 0)
-    x2 = request.form.get('x2', 0)
-
-    try:
-        x1 = float(x1)
-        x2 = float(x2)
-    except ValueError:
-        error = "Введите корректные числа"
-        return render_template('lab4/sum.html', error=error)
-
-    result = x1 + x2
-    return render_template('lab4/sum.html', result=result)
 
 @lab4.route('/lab4/mul-form')
 def mul_form():
     return render_template('lab4/mul-form.html')
 
-@lab4.route('/lab4/mul', methods=['POST'])
-def mul():
-    x1 = request.form.get('x1', 1)
-    x2 = request.form.get('x2', 1)
-
-    try:
-        x1 = float(x1)
-        x2 = float(x2)
-    except ValueError:
-        error = "Введите корректные числа"
-        return render_template('lab4/mul.html', error=error)
-
-    result = x1 * x2
-    return render_template('lab4/mul.html', result=result)
-
 @lab4.route('/lab4/sub-form')
 def sub_form():
     return render_template('lab4/sub-form.html')
+
+@lab4.route('/lab4/pow-form')
+def pow_form():
+    return render_template('lab4/pow-form.html')
+
+@lab4.route('/lab4/div', methods=['POST'])
+def div():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    if  x1 =='' or  x2 == '':
+        return render_template('lab4/div.html', error='Оба поля должны быть заполнены!')
+    
+    x1 = float(x1)
+    x2 = float(x2)
+
+    if x2 == 0:
+        return render_template('lab4/div.html', error='На ноль делить нельзя!')
+
+    result = x1 / x2
+    return render_template('lab4/div.html', x1=x1, x2=x2, result=result)
+
+@lab4.route('/lab4/sum', methods=['POST'])
+def sum():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    x1 = float(x1) if x1 else 0
+    x2 = float(x2) if x2 else 0
+
+    result = x1 + x2
+    return render_template('lab4/sum.html', x1=x1, x2=x2, result=result)
+
+@lab4.route('/lab4/mul', methods=['POST'])
+def mul():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    x1 = float(x1) if x1 else 1
+    x2 = float(x2) if x2 else 1
+
+    result = x1 * x2
+    return render_template('lab4/mul.html', x1=x1, x2=x2, result=result)
 
 @lab4.route('/lab4/sub', methods=['POST'])
 def sub():
     x1 = request.form.get('x1')
     x2 = request.form.get('x2')
 
-    if not x1 or not x2:
-        error = "Оба поля должны быть заполнены"
-        return render_template('lab4/sub.html', error=error)
+    if x1 =='' or x2 == '':
+        return render_template('lab4/sub.html', error='Оба поля должны быть заполнены!')
 
-    try:
-        x1 = float(x1)
-        x2 = float(x2)
-    except ValueError:
-        error = "Введите корректные числа"
-        return render_template('lab4/sub.html', error=error)
+    x1 = float(x1)
+    x2 = float(x2)
 
     result = x1 - x2
-    return render_template('lab4/sub.html', result=result)
-
-@lab4.route('/lab4/pow-form')
-def pow_form():
-    return render_template('lab4/pow-form.html')
+    return render_template('lab4/sub.html', x1=x1, x2=x2, result=result)
 
 @lab4.route('/lab4/pow', methods=['POST'])
 def pow():
     x1 = request.form.get('x1')
     x2 = request.form.get('x2')
 
-    if not x1 or not x2:
-        error = "Оба поля должны быть заполнены"
-        return render_template('lab4/pow.html', error=error)
+    if x1 == '' or x2 == '':
+        return render_template('lab4/pow.html', error='Оба поля должны быть заполнены!')
 
-    try:
-        x1 = float(x1)
-        x2 = float(x2)
-    except ValueError:
-        error = "Введите корректные числа"
-        return render_template('lab4/pow.html', error=error)
+    x1 = float(x1)
+    x2 = float(x2)
 
     if x1 == 0 and x2 == 0:
-        error = "Ноль в нулевой степени не определен"
-        return render_template('lab4/pow.html', error=error)
+        return render_template('lab4/pow.html', error='0 в степени 0 не определено!')
 
     result = x1 ** x2
-    return render_template('lab4/pow.html', result=result)
+    return render_template('lab4/pow.html', x1=x1, x2=x2, result=result)
 
-@lab4.route('/lab4/tree', methods=['GET', 'POST'])
+tree_count = 0
+
+@lab4.route('/lab4/tree', methods = ['GET', 'POST'])
 def tree():
     global tree_count
-
     if request.method == 'GET':
         return render_template('lab4/tree.html', tree_count=tree_count)
-
+    
     operation = request.form.get('operation')
 
-    if operation == 'plant' and tree_count < 10:
-        tree_count += 1
-    elif operation == 'cut' and tree_count > 0:
+    if operation == 'cut':
         tree_count -= 1
+    elif operation == 'plant':
+        tree_count +=1
+    
+    return redirect ('/lab4/tree')
 
-    return redirect('/lab4/tree')
+users = [
+    {'login': 'alex', 'password': '123', 'name': 'Alex Johnson', 'gender': 'male'},
+    {'login': 'bob', 'password': '555', 'name': 'Bob Brown', 'gender': 'male'},
+    {'login': 'den', 'password': '111', 'name': 'Denise Adams', 'gender': 'female'},
+    {'login': 'rob', 'password': '000', 'name': 'Robert Smith', 'gender': 'male'},
+]
 
 @lab4.route('/lab4/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         if 'login' in session:
-            return render_template('lab4/login.html', authorized=True, login=session['login'], name=session['name'])
+            authorized = True
+            login = session['login']
+            name = next(user['name'] for user in users if user['login'] == login)
         else:
-            return render_template('lab4/login.html', authorized=False)
-
+            authorized = False
+            login = ''
+            name = ''
+        return render_template('lab4/login.html', authorized=authorized, login=login, name=name)
+    
     login = request.form.get('login')
     password = request.form.get('password')
 
+    # Проверка на пустые поля
     if not login:
-        error = "Не введён логин"
-        return render_template('lab4/login.html', authorized=False, error=error, login=login)
-
+        error = 'Не введён логин'
+        return render_template('lab4/login.html', error=error, authorized=False, login=login)
     if not password:
-        error = "Не введён пароль"
-        return render_template('lab4/login.html', authorized=False, error=error, login=login)
+        error = 'Не введён пароль'
+        return render_template('lab4/login.html', error=error, authorized=False, login=login)
 
+    # Поиск пользователя
     for user in users:
-        if user['login'] == login and user['password'] == password:
-            session['login'] = login
-            session['name'] = user['name']
-            return redirect('/lab4/login')
+        if login == user['login'] and password == user['password']:
+            session['login'] = login  
+            return redirect('/lab4/login') 
 
-    error = "Неверный логин или пароль"
-    return render_template('lab4/login.html', authorized=False, error=error, login=login)
+    error = 'Неверные логин и/или пароль'
+    return render_template('lab4/login.html', error=error, authorized=False, login=login)
 
 @lab4.route('/lab4/logout', methods=['POST'])
 def logout():
     session.pop('login', None)
-    session.pop('name', None)
     return redirect('/lab4/login')
+
 
 @lab4.route('/lab4/fridge', methods=['GET', 'POST'])
 def fridge():
     if request.method == 'GET':
-        return render_template('lab4/fridge.html', temperature=None)
+        return render_template('lab4/fridge.html')
 
+    # Получаем температуру из формы
     temperature = request.form.get('temperature')
 
     if not temperature:
-        error = "Ошибка: не задана температура"
-        return render_template('lab4/fridge.html', error=error, temperature=None)
+        error = 'Ошибка: не задана температура'
+        return render_template('lab4/fridge.html', error=error)
 
     try:
-        temperature = float(temperature)
+        temp = float(temperature)
     except ValueError:
-        error = "Ошибка: введите корректное число"
-        return render_template('lab4/fridge.html', error=error, temperature=None)
+        error = 'Ошибка: температура должна быть числом'
+        return render_template('lab4/fridge.html', error=error)
 
-    if temperature < -12:
-        error = "Не удалось установить температуру — слишком низкое значение"
-        return render_template('lab4/fridge.html', error=error, temperature=None)
+    snowflakes = None
+    if temp < -12:
+        message = 'Не удалось установить температуру — слишком низкое значение'
+    elif temp > -1:
+        message = 'Не удалось установить температуру — слишком высокое значение'
+    elif -12 <= temp <= -9:
+        message = f'Установлена температура: {temp}°С'
+        snowflakes = 3  # три снежинки
+    elif -8 <= temp <= -5:
+        message = f'Установлена температура: {temp}°С'
+        snowflakes = 2  # две снежинки
+    elif -4 <= temp <= -1:
+        message = f'Установлена температура: {temp}°С'
+        snowflakes = 1  # одна снежинка
+    else:
+        message = 'Неизвестная ошибка'
 
-    if temperature > -1:
-        error = "Не удалось установить температуру — слишком высокое значение"
-        return render_template('lab4/fridge.html', error=error, temperature=None)
+    return render_template('lab4/fridge.html', message=message, snowflakes=snowflakes)
 
-    return render_template('lab4/fridge.html', temperature=temperature)
+corn = {
+    'barley': {'name': 'ячмень', 'price': 12345},
+    'oats': {'name': 'овёс', 'price': 8522},
+    'wheat': {'name': 'пшеница', 'price': 8722},
+    'rye': {'name': 'рожь', 'price': 14111}
+}
+@lab4.route('/lab4/order_grain', methods=['GET', 'POST'])
+def order_grain():
+    if request.method == 'POST':
+        grain = request.form.get('grain')
+        weight = request.form.get('weight')
 
-@lab4.route('/lab4/grain_order', methods=['GET', 'POST'])
-def grain_order():
-    if request.method == 'GET':
-        return render_template('lab4/grain_order.html')
+        if not weight:
+            message = "Ошибка: укажите вес заказа."
+            return render_template('lab4/order_grain.html', message=message)
 
-    grain = request.form.get('grain')
-    weight = request.form.get('weight')
+        try:
+            weight = float(weight)
+        except ValueError:
+            message = "Ошибка: вес должен быть числом."
+            return render_template('lab4/order_grain.html', message=message)
 
-    if not weight:
-        error = "Ошибка: не указан вес"
-        return render_template('lab4/grain_order.html', error=error)
+        if weight <= 0:
+            message = "Ошибка: вес должен быть больше 0."
+            return render_template('lab4/order_grain.html', message=message)
 
-    try:
-        weight = float(weight)
-    except ValueError:
-        error = "Ошибка: введите корректный вес"
-        return render_template('lab4/grain_order.html', error=error)
+        if weight > 500:
+            message = "Ошибка: такого объёма сейчас нет в наличии."
+            return render_template('lab4/order_grain.html', message=message)
 
-    if weight <= 0:
-        error = "Ошибка: вес должен быть больше 0"
-        return render_template('lab4/grain_order.html', error=error)
 
-    if weight > 500:
-        error = "Ошибка: такого объёма сейчас нет в наличии"
-        return render_template('lab4/grain_order.html', error=error)
+        grain_info = corn.get(grain)
+        if not grain_info:
+            message = "Ошибка: некорректный выбор зерна."
+            return render_template('lab4/order_grain.html', message=message)
 
-    prices = {
-        'ячмень': 12345,
-        'овёс': 8522,
-        'пшеница': 8722,
-        'рожь': 14111
-    }
+        price_per_ton = grain_info['price']
+        grain_name_ru = grain_info['name']
+        total_price = weight * price_per_ton
 
-    total_price = prices[grain] * weight
+        discount_message = None
+        if weight > 50:
+            discount = 0.1  # 10% скидка
+            total_price *= (1 - discount)
+            discount_message = "Применена скидка 10% за большой объём."
 
-    discount = 0
-    if weight > 50:
-        discount = 10
-        total_price *= 0.9
+        message = f"Заказ успешно сформирован. Вы заказали {grain_name_ru}. Вес: {weight} т. Сумма к оплате: {total_price:.2f} руб."
 
-    order_message = f"Заказ успешно сформирован. Вы заказали {grain}. Вес: {weight} т. Сумма к оплате: {total_price} руб."
-    return render_template('lab4/grain_order.html', order_message=order_message, discount=discount)
+        return render_template('lab4/order_grain.html', message=message, discount=discount_message)
+
+    return render_template('lab4/order_grain.html')
+
+@lab4.route('/lab4/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        login = request.form.get('login')
+        password = request.form.get('password')
+        name = request.form.get('name')
+
+        if not login or not password or not name:
+            error = 'Все поля обязательны для заполнения.'
+            return render_template('lab4/register.html', error=error)
+        
+        if any(user['login'] == login for user in users):
+            error = 'Логин уже занят.'
+            return render_template('lab4/register.html', error=error)
+        
+        users.append({'login': login, 'password': password, 'name': name, 'gender': 'unknown'})
+        return redirect('/lab4/login')
+    
+    return render_template('lab4/register.html')
+
+@lab4.route('/lab4/users')
+def users_list():
+    if 'login' not in session:
+        return redirect('/lab4/login')
+    
+    current_user = next(user for user in users if user['login'] == session['login'])
+    return render_template('lab4/users.html', users=users, current_user=current_user)
+
+@lab4.route('/lab4/delete', methods=['POST'])
+def delete_user():
+    login = request.form.get('login')
+    users[:] = [user for user in users if user['login'] != login]
+    session.pop('login', None)
+    return redirect('/lab4/login')

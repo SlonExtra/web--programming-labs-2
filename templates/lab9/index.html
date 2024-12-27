@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+
+{% block styles %}
+<style>
+    header, footer {
+        background-color: #00006c; 
+        color: white;  
+        font-size: 18px;
+    }
+
+    div {
+        font-size: 18px;
+    }
+
+</style>
+{% endblock %}
+<div>
+    <h1>Поздравления</h1>
+
+    {% if message %}
+        <!-- Если данные о поздравлении есть в сессии -->
+        <p>{{ message }}</p>
+        <img src="{{ url_for('static', filename=image) }}"class="centered-image">
+        <br>
+        <a href="{{ url_for('lab9.reset') }}">Сбросить данные и начать заново</a>
+    {% else %}
+        <!-- Если данных нет в сессии, показываем сообщение о необходимости пройти через форму -->
+        <p>Пройдите через несколько шагов, чтобы получить персональное поздравление!</p>
+        <a href="{{ url_for('lab9.name') }}">Начать</a>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,35 +1,53 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Руди Дмитрий. Лабораторная работа 2</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <style>
-        body {
-            {% if request.cookies.get('color') %}color: {{ request.cookies.get('color') }};{% else %}color: black;{% endif %}
-            {% if request.cookies.get('background_color') %}background-color: {{ request.cookies.get('background_color') }};{% else %}background-color: white;{% endif %}
-            {% if request.cookies.get('font_size') %}font-size: {{ request.cookies.get('font_size') }}px;{% else %}font-size: 16px;{% endif %}
-        }
-        a {
-            {% if request.cookies.get('link_color') %}color: {{ request.cookies.get('link_color') }};{% else %}color: blue;{% endif %}
-        }
-    </style>
-</head>
-<body>
-    <header>
-        НГТУ, ФБ, WEB-программирование, часть 2. {% block lab %}{% endblock %}
-    </header>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Алина Терехова. {% block lab%}{% endblock %}</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='lab1/main.css')}}">
+        <link rel="icon" href="{{ url_for('static', filename='lab2/favicon.ico') }}" >
+        <style>
+            body {
+                {% if request.cookies.get('color') %}
+                    color: {{ request.cookies.get('color') }};
+                {% endif %}
+    
+                {% if request.cookies.get('bg_color') %}
+                    background-color: {{ request.cookies.get('bg_color') }};
+                {% endif %}
+    
+                {% if request.cookies.get('font_size') %}
+                    font-size: {{ request.cookies.get('font_size') }}px;
+                {% endif %}
+    
+                {% if request.cookies.get('font_style') == 'italic' %}
+                font-style: italic;
+                {% elif request.cookies.get('font_style') == 'bold' %}
+                    font-weight: bold;
+                {% else %}
+                    font-style: normal;
+                    font-weight: normal;
+                {% endif %}
+            }
+        </style>
+        {% block script %} {% endblock %}
+        {% block styles %}{% endblock %}
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    </head>
+    <body>
+        <header>
+            WEB-программирование, часть 2. {{self.lab()}}
+            <nav>
+                <a href="{{ url_for('menu') }}">Главное меню</a>
+            </nav>
+        </header>
 
-    <footer>
-        &copy; {% if name %}{{ name }}{% else %}Анонимус{% endif %}, 
-        {% if group %}ФБИ-{{ group }},{% else %}Группа не указана,{% endif %} 
-        {% if course %} {{ course }} курс,{% else %}Курс не указан,{% endif %} 2024 
-    </footer>
-</body>
-</html>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+
+        <footer>
+            &copy; Руди Дситрий, ФБИ-24, 3 курс, 2024
+        </footer>
+    </body>
+    </html>

@@ -1,16 +1,11 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block lab %}Лабораторная работа 4. Вычитание чисел{% endblock %}
+{% block lab %}Вычитание{% endblock %}
 
-{% block content %}
-    <h1>Вычитание чисел</h1>
+{% block main %}
     <form method="post" action="/lab4/sub">
-        <label>
-            Число 1: <input type="number" name="x1" required>
-        </label><br>
-        <label>
-            Число 2: <input type="number" name="x2" required>
-        </label><br>
-        <button type="submit">-</button>
+        <h1>Вычитание</h1>
+        <input type="number" name="x1"> - <input type="number" name="x2">
+        <input type="submit" value="=">
     </form>
 {% endblock %}

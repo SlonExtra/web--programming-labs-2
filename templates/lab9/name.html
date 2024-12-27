@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+{% block styles %}
+<style>
+    body {
+        background-image: url('{{ url_for('static', filename='snowflakes2.gif') }}');
+    }
+
+    header, footer {
+        background-color: #00006c; 
+        color: white;  
+    }
+
+</style>
+{% endblock %}
+
+<form method="POST" class="form-center">
+    <div class="option-block">
+        <label for="name">Ваше имя:</label>
+        <input type="text" id="name" name="name" required class="input-field">
+    </div>
+    <button type="submit" class="submit-btn">Далее</button>
+</form>
+{% endblock %}

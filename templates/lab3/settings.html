@@ -1,22 +1,38 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block lab %}Лабораторная работа 3. Настройки отображения{% endblock %}
+{# номер лабораторной работы: #}
+{% block lab %}Лабораторная работа 3{% endblock %}
 
-{% block content %}
-    <h1>Настройки отображения</h1>
-    <form action="/lab3/settings" method="post">
-        <label>
-            Цвет текста: <input type="color" name="color" value="{{ color }}">
-        </label><br>
-        <label>
-            Цвет фона: <input type="color" name="background_color" value="{{ background_color }}">
-        </label><br>
-        <label>
-            Размер шрифта: <input type="number" name="font_size" value="{{ font_size }}" min="10" max="48">
-        </label><br>
-        <label>
-            Цвет ссылок: <input type="color" name="link_color" value="{{ link_color }}">
-        </label><br>
-        <button type="submit">ОК</button>
+{# основной контент #}
+{% block main %}
+    <h1>Настройки стилей через Cookies</h1>
+
+    <form>
+        <div>
+            <label for="color">Выберите цвет текста:</label>
+            <input type="color" id="color" name="color" value="{{ color or '#000000' }}">
+        </div>
+        <div>
+            <label for="bg_color">Выберите цвет фона:</label>
+            <input type="color" id="bg_color" name="bg_color" value="{{ bg_color or '#ffffff' }}">
+        </div>
+        <div>
+            <label for="font_size">Выберите размер шрифта:</label>
+            <input type="number" id="font_size" name="font_size" value="{{ font_size or '16' }}"> px
+        </div>
+        <div>
+            <label for="font_style">Выберите стиль шрифта:</label>
+            <select id="font_style" name="font_style">
+                <option value="normal" {% if font_style == 'normal' %} selected {% endif %}>Обычный</option>
+                <option value="italic" {% if font_style == 'italic' %} selected {% endif %}>Курсив</option>
+                <option value="bold" {% if font_style == 'bold' %} selected {% endif %}>Жирный</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Применить</button>
+        </div>
+        <div>
+            <a href="/lab3/clear_cookies">Очистка</a>
+        </div>
     </form>
 {% endblock %}
