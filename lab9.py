@@ -12,7 +12,7 @@ def lab():
         preference = session['preference']
         specific_preference = session['specific_preference']
 
-        # Условие для возраста (ребёнок или взрослый)
+        # Условие для возраста (ребёнок или взрослый)!
         if age < 18:
             age_group = 'ребёнок'
         else:
