@@ -71,7 +71,7 @@ def del_film(id):
     
     db_close(conn, cur)
     
-    # Преобразуем для SQLite1t
+    # Преобразуем для SQLite
     if current_app.config.get('DB_TYPE') == 'sqlite' and deleted_film:
         deleted_film = dict(deleted_film)
     
